@@ -19,11 +19,7 @@ public class MotorcycleType {
 
     private String motorcycleType;
 
-//    @ManyToOne
-//    @JoinColumn(name = "motorCycle")
-//    @JsonBackReference
-//    private Motorcycle motorcycle;
     @OneToMany(mappedBy = "motorcycleType", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference  // Esta es la parte administrada de la relación
+    @JsonManagedReference
     private List<Motorcycle> motorcycle;
 }
