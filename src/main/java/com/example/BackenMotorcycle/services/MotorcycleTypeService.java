@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class MotorcycleTypeService {
     @Autowired
-    MotorcycleTypeRepository motorcycleTypeRepository;
+    private MotorcycleTypeRepository motorcycleTypeRepository;
 
     public List<MotorcycleType> getAll(){
         return motorcycleTypeRepository.findAll();
