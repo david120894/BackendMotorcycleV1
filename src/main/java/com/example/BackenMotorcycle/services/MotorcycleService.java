@@ -1,32 +1,22 @@
 package com.example.BackenMotorcycle.services;
 
-import com.example.BackenMotorcycle.entity.Motorcycle;
-import com.example.BackenMotorcycle.repository.MotorcycleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.List;
 
-@Service
-public class MotorcycleService {
+import com.example.BackenMotorcycle.entity.Motorcycle;
 
-    @Autowired
-    private MotorcycleRepository motorcycleRepository;
+public interface MotorcycleService {
+    List<Motorcycle> findAll();
 
-    public List<Motorcycle> getAll() {
-        return motorcycleRepository.findAll();
-    }
+    // List<Motorcycle> findAllNivelRemunerativo(Long id);
 
-    public Motorcycle createMotorcycle(@RequestBody Motorcycle motorcycle){
-        return motorcycleRepository.save(motorcycle);
-    }
+    Motorcycle findById(Long id);
 
-    public Motorcycle updateMotorcycle(@RequestBody Motorcycle motorcycle){
-        return motorcycleRepository.save(motorcycle);
-    }
+    List<Motorcycle> findAllByMotorcycle(Long id);
 
-    public void deleteMotorcycle(Long id){
-        motorcycleRepository.deleteById(id);
-    }
+    Motorcycle create(Motorcycle motorcycle);
+
+    Motorcycle edit(Long id, Motorcycle motorcycle);
+
+    void delete(Long id);
+
 }

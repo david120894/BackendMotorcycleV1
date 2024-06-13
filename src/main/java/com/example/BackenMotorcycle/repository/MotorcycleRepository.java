@@ -1,7 +1,13 @@
 package com.example.BackenMotorcycle.repository;
 
-import com.example.BackenMotorcycle.entity.Motorcycle;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MotorcycleRepository extends JpaRepository<Motorcycle,Long> {
+import com.example.BackenMotorcycle.entity.Motorcycle;
+import com.example.BackenMotorcycle.entity.MotorcycleType;
+
+public interface MotorcycleRepository extends JpaRepository<Motorcycle, Long> {
+
+    List<Motorcycle> findAllByMotorcycleType(MotorcycleType motorcycleType);
 }
