@@ -1,8 +1,6 @@
 package com.example.BackenMotorcycle.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,7 +20,7 @@ public class Motorcycle {
     private int year;
     private String color;
     private String price;
-
+    
     @ManyToOne
     @JoinColumn(name = "motorcycle_type_id")
     @JsonBackReference

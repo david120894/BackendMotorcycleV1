@@ -19,7 +19,7 @@ public class MotorcycleType {
 
     private String motorcycleType;
 
-    @OneToMany(mappedBy = "motorcycleType", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Motorcycle> motorcycle;
+    //@OneToMany(mappedBy = "motorcycleType", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JsonManagedReference
+    //private List<Motorcycle> motorcycle;
 }
