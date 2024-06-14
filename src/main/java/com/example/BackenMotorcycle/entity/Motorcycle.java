@@ -1,10 +1,7 @@
 package com.example.BackenMotorcycle.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Entity
@@ -20,9 +17,8 @@ public class Motorcycle {
     private int year;
     private String color;
     private String price;
-    
+
     @ManyToOne
     @JoinColumn(name = "motorcycle_type_id")
-    @JsonBackReference
     private MotorcycleType motorcycleType;
 }
