@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "API para el chaco", version = "0.1", description = "apis para motocicletas"))
-public class BackenMotorcycleApplication {
+public class BackenMotorcycleApplication implements WebMvcConfigurer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackenMotorcycleApplication.class, args);
