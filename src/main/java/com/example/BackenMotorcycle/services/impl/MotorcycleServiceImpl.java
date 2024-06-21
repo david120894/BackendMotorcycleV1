@@ -48,6 +48,7 @@ public class MotorcycleServiceImpl implements MotorcycleService {
         aux.setModel(motorcycle.getModel());
         aux.setPrice(motorcycle.getPrice());
         aux.setYear(motorcycle.getYear());
+        aux.setMotorcycleType(motorcycle.getMotorcycleType());
         return motorcycleRepository.save(aux);
     }
 
