@@ -11,6 +11,8 @@ import com.example.BackenMotorcycle.repository.MotorcycleRepository;
 import com.example.BackenMotorcycle.services.MotorcycleService;
 import com.example.BackenMotorcycle.services.MotorcycleTypeService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class MotorcycleServiceImpl implements MotorcycleService {
 
@@ -36,14 +38,16 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     }
 
     @Override
+    @Transactional
     public Motorcycle create(Motorcycle motorcycle) {
         return motorcycleRepository.save(motorcycle);
     }
 
     @Override
+    @Transactional
     public Motorcycle edit(Long id, Motorcycle motorcycle) {
         Motorcycle aux = findById(id);
-        aux.setBrand(motorcycle.getBrand());
+        aux.setBrandcycle(motorcycle.getBrandcycle());
         aux.setColor(motorcycle.getColor());
         aux.setModel(motorcycle.getModel());
         aux.setPrice(motorcycle.getPrice());
@@ -53,6 +57,7 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         motorcycleRepository.deleteById(id);
     }

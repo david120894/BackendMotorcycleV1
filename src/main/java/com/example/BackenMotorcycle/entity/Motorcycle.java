@@ -12,11 +12,15 @@ public class Motorcycle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String brand;
     private String model;
     private int year;
     private String color;
     private String price;
+    private String image;
+
+    @ManyToOne
+    @JoinColumn(name = "brandcycle_id")
+    private Brandcycle brandcycle;
 
     @ManyToOne
     @JoinColumn(name = "motorcycle_type_id")

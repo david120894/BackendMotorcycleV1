@@ -1,5 +1,6 @@
 package com.example.BackenMotorcycle.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,14 @@ public class MotorcycleController {
     }
 
     @PostMapping("create")
-    public Motorcycle createMotorcycle(@RequestBody Motorcycle motorcycle) {
+    public Motorcycle createMotorcycle(
+            @RequestBody Motorcycle motorcycle) throws IOException {
         return motorcycleService.create(motorcycle);
     }
 
     @PutMapping("update/{id}")
-    public Motorcycle updateMotorcycle(@RequestBody Motorcycle motorcycle, @PathVariable Long id) {
+    public Motorcycle updateMotorcycle(
+            @RequestBody Motorcycle motorcycle, @PathVariable Long id) {
         return motorcycleService.edit(id, motorcycle);
     }
 
