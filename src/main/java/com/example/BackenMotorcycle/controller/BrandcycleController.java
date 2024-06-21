@@ -12,38 +12,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.BackenMotorcycle.entity.MotorcycleType;
-import com.example.BackenMotorcycle.services.impl.MotorcycleTypeServiceImpl;
+import com.example.BackenMotorcycle.entity.Brandcycle;
+import com.example.BackenMotorcycle.services.impl.BrandcycleServiceImpl;
 
 @RestController
-@RequestMapping(path = "api/v1/motorcycle_type")
-public class MotorcycleTypeController {
+@RequestMapping(path = "api/v1/brandcycle")
+public class BrandcycleController {
 
     @Autowired
-    private MotorcycleTypeServiceImpl motorcycleTypeService;
+    private BrandcycleServiceImpl brandcycleService;
 
     @GetMapping("list")
-    public List<MotorcycleType> findAll() {
-        return motorcycleTypeService.findAll();
+    public List<Brandcycle> findAll() {
+        return brandcycleService.findAll();
     }
 
     @GetMapping("view/{id}")
-    public MotorcycleType getMotorcycle(@PathVariable Long id) {
-        return motorcycleTypeService.findById(id);
+    public Brandcycle getMotorcycle(@PathVariable Long id) {
+        return brandcycleService.findById(id);
     }
 
     @PostMapping("create")
-    public MotorcycleType createMotorcycle(@RequestBody MotorcycleType motorcycle) {
-        return motorcycleTypeService.create(motorcycle);
+    public Brandcycle createMotorcycle(@RequestBody Brandcycle motorcycle) {
+        return brandcycleService.create(motorcycle);
     }
 
     @PutMapping("update/{id}")
-    public MotorcycleType updateMotorcycle(@RequestBody MotorcycleType motorcycle, @PathVariable Long id) {
-        return motorcycleTypeService.edit(id, motorcycle);
+    public Brandcycle updateMotorcycle(@RequestBody Brandcycle motorcycle, @PathVariable Long id) {
+        return brandcycleService.edit(id, motorcycle);
     }
 
     @DeleteMapping("delete/{id}")
     public void updateMotorcycle(@PathVariable Long id) {
-        motorcycleTypeService.delete(id);
+        brandcycleService.delete(id);
     }
 }

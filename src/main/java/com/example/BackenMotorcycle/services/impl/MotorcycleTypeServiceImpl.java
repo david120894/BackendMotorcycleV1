@@ -9,6 +9,8 @@ import com.example.BackenMotorcycle.entity.MotorcycleType;
 import com.example.BackenMotorcycle.repository.MotorcycleTypeRepository;
 import com.example.BackenMotorcycle.services.MotorcycleTypeService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class MotorcycleTypeServiceImpl implements MotorcycleTypeService {
     @Autowired
@@ -25,11 +27,13 @@ public class MotorcycleTypeServiceImpl implements MotorcycleTypeService {
     }
 
     @Override
+    @Transactional
     public MotorcycleType create(MotorcycleType motorcycleType) {
         return motorcycleTypeRepository.save(motorcycleType);
     }
 
     @Override
+    @Transactional
     public MotorcycleType edit(Long id, MotorcycleType motorcycleType) {
         MotorcycleType aux = findById(id);
         aux.setMotorcycleType(motorcycleType.getMotorcycleType());
@@ -38,6 +42,7 @@ public class MotorcycleTypeServiceImpl implements MotorcycleTypeService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         motorcycleTypeRepository.deleteById(id);
     }
