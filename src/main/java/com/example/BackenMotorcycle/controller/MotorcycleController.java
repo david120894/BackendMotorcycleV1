@@ -3,24 +3,25 @@ package com.example.BackenMotorcycle.controller;
 import java.io.IOException;
 import java.util.List;
 
+import com.example.BackenMotorcycle.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.BackenMotorcycle.entity.Motorcycle;
 import com.example.BackenMotorcycle.services.MotorcycleService;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(path = "api/v1/motorcycle")
 public class MotorcycleController {
     @Autowired
     private MotorcycleService motorcycleService;
+
+    @Autowired
+    private StorageService storageService;
 
     @GetMapping("list")
     public List<Motorcycle> findAll() {
@@ -29,8 +30,16 @@ public class MotorcycleController {
 
     @GetMapping("view/{id}")
     public Motorcycle getMotorcycle(@PathVariable Long id) {
-        return motorcycleService.findById(id);
+
+//        return motorcycleService.findById(id);
+        Motorcycle motorcycle = motorcycleService.findById(id);
+        if (motorcycle != null && motorcycle.getImage() != null) {
+            String imageUrl = buildImageUrl(motorcycle.getImage());
+            motorcycle.setImage(imageUrl);
+        }
+        return motorcycle;
     }
+
 
     @GetMapping("motorcycleType/{id}")
     public List<Motorcycle> getMotorcycleType(@PathVariable Long id) {
@@ -54,4 +63,43 @@ public class MotorcycleController {
         motorcycleService.delete(id);
     }
 
+    @PostMapping("upload")
+    public Motorcycle handleFileUpload(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("model") String model,
+            @RequestParam("year") int year,
+            @RequestParam("color") String color,
+            @RequestParam("price") String price,
+            @RequestParam("brandcycleId") Long brandcycleId,
+            @RequestParam("motorcycleTypeId") Long motorcycleTypeId) throws IOException {
+
+        String filePath = storageService.store(file);
+
+        Motorcycle motorcycle = new Motorcycle();
+        motorcycle.setModel(model);
+        motorcycle.setYear(year);
+        motorcycle.setColor(color);
+        motorcycle.setPrice(price);
+        motorcycle.setImage(filePath);
+
+        // Aquí puedes añadir la lógica para establecer las relaciones de Brandcycle y MotorcycleType
+        // Ejemplo:
+        // motorcycle.setBrandcycle(brandcycleService.findById(brandcycleId));
+        // motorcycle.setMotorcycleType(motorcycleTypeService.findById(motorcycleTypeId));
+
+        return motorcycleService.create(motorcycle);
+    }
+
+    @GetMapping("image/{filename:.+}")
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        Resource file = storageService.loadAsResource(filename);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+    }
+
+    private String buildImageUrl(String filename) {
+        // Ajusta esta URL base según sea necesario para que coincida con tu configuración
+        return "http://localhost:8080/api/v1/motorcycle/image/" + filename;
+    }
 }
