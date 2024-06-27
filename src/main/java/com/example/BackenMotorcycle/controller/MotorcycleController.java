@@ -1,6 +1,7 @@
 package com.example.BackenMotorcycle.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 import com.example.BackenMotorcycle.services.StorageService;
@@ -39,7 +40,6 @@ public class MotorcycleController {
         }
         return motorcycle;
     }
-
 
     @GetMapping("motorcycleType/{id}")
     public List<Motorcycle> getMotorcycleType(@PathVariable Long id) {
@@ -91,12 +91,16 @@ public class MotorcycleController {
     }
 
     @GetMapping("image/{filename:.+}")
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
         Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+        String contentType = Files.probeContentType(file.getFile().toPath());
+        return ResponseEntity
+                .ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_TYPE, contentType)
                 .body(file);
     }
+
 
     private String buildImageUrl(String filename) {
         // Ajusta esta URL base según sea necesario para que coincida con tu configuración

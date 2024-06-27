@@ -17,7 +17,7 @@ import com.example.BackenMotorcycle.services.impl.MotorcycleTypeServiceImpl;
 
 @RestController
 @RequestMapping(path = "api/v1/motorcycle_type")
-public class MotorcycleTypeController {
+public class  MotorcycleTypeController {
 
     @Autowired
     private MotorcycleTypeServiceImpl motorcycleTypeService;
