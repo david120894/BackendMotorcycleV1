@@ -19,7 +19,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileSystemStorageService implements StorageService {
 
-    @Value("{media.location}")
+    @Value("${media.location}")
     private String mediaLocation;
 
     private Path rootLocation;
