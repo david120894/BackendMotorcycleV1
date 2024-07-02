@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.BackenMotorcycle.services.BrandcycleService;
 import com.example.BackenMotorcycle.services.MotorcycleTypeService;
 import com.example.BackenMotorcycle.services.StorageService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,6 @@ public class MotorcycleController {
 
     @GetMapping("view/{id}")
     public Motorcycle getMotorcycle(@PathVariable Long id) {
-
-//        return motorcycleService.findById(id);
         Motorcycle motorcycle = motorcycleService.findById(id);
         if (motorcycle != null && motorcycle.getImage() != null) {
             String imageUrl = buildImageUrl(motorcycle.getImage());
@@ -59,13 +58,18 @@ public class MotorcycleController {
 
     @PostMapping("create")
     public Motorcycle createMotorcycle(
-            @RequestParam("motorcycle") Motorcycle motorcycle, @RequestParam("file") MultipartFile file) throws IOException {
+            @RequestPart("motorcycle") String motorcycleJson,
+            @RequestPart("file") MultipartFile file) throws IOException {
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        Motorcycle motorcycle = objectMapper.readValue(motorcycleJson, Motorcycle.class);
+
+        // Manejar la carga del archivo
         String filePath = storageService.store(file);
         motorcycle.setImage(filePath);
 
+        // Crear y guardar la motocicleta
         return motorcycleService.create(motorcycle);
-
     }
 
     @PutMapping("update/{id}")
@@ -78,31 +82,6 @@ public class MotorcycleController {
     public void updateMotorcycle(@PathVariable Long id) {
         motorcycleService.delete(id);
     }
-
-//    @PostMapping("upload")
-//    public Motorcycle handleFileUpload(
-//            @RequestParam("file") MultipartFile file,
-//            @RequestParam("model") String model,
-//            @RequestParam("year") int year,
-//            @RequestParam("color") String color,
-//            @RequestParam("price") String price,
-//            @RequestParam("brandcycleId") Long brandcycleId,
-//            @RequestParam("motorcycleTypeId") Long motorcycleTypeId) throws IOException {
-//
-//        String filePath = storageService.store(file);
-//
-//        Motorcycle motorcycle = new Motorcycle();
-//        motorcycle.setModel(model);
-//        motorcycle.setYear(year);
-
-//        motorcycle.setColor(color);
-//        motorcycle.setPrice(price);
-//        motorcycle.setImage(filePath);
-//        motorcycle.setBrandcycle(brandcycleService.findById(brandcycleId));
-//        motorcycle.setMotorcycleType(motorcycleTypeService.findById(motorcycleTypeId));
-//
-//        return motorcycleService.create(motorcycle);
-//    }
 
     @GetMapping("image/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
