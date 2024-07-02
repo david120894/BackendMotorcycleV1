@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+import com.example.BackenMotorcycle.services.BrandcycleService;
+import com.example.BackenMotorcycle.services.MotorcycleTypeService;
 import com.example.BackenMotorcycle.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -20,6 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class MotorcycleController {
     @Autowired
     private MotorcycleService motorcycleService;
+
+    @Autowired
+    private BrandcycleService brandcycleService;
+
+    @Autowired
+    private MotorcycleTypeService motorcycleTypeService;
 
     @Autowired
     private StorageService storageService;
@@ -81,22 +89,21 @@ public class MotorcycleController {
         motorcycle.setColor(color);
         motorcycle.setPrice(price);
         motorcycle.setImage(filePath);
-
-        // Aquí puedes añadir la lógica para establecer las relaciones de Brandcycle y MotorcycleType
-        // Ejemplo:
-        // motorcycle.setBrandcycle(brandcycleService.findById(brandcycleId));
-        // motorcycle.setMotorcycleType(motorcycleTypeService.findById(motorcycleTypeId));
+        motorcycle.setBrandcycle(brandcycleService.findById(brandcycleId));
+        motorcycle.setMotorcycleType(motorcycleTypeService.findById(motorcycleTypeId));
 
         return motorcycleService.create(motorcycle);
     }
 
     @GetMapping("image/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
+        if (filename == null || filename.isEmpty()) {
+            throw new RuntimeException("Filename is null");
+        }
         Resource file = storageService.loadAsResource(filename);
         String contentType = Files.probeContentType(file.getFile().toPath());
         return ResponseEntity
                 .ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"")
                 .header(HttpHeaders.CONTENT_TYPE, contentType)
                 .body(file);
     }

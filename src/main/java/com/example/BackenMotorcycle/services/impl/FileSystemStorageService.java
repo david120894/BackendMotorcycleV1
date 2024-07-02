@@ -52,6 +52,9 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public Resource loadAsResource(String filename) {
         try {
+            if (filename == null || filename.isEmpty()) {
+                throw new RuntimeException("Filename is empty");
+            }
             Path file = rootLocation.resolve(filename);
             Resource resource = new UrlResource((file.toUri()));
             if (resource.exists() || resource.isReadable()) {
