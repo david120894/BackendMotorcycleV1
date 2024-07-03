@@ -63,12 +63,8 @@ public class MotorcycleController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Motorcycle motorcycle = objectMapper.readValue(motorcycleJson, Motorcycle.class);
-
-        // Manejar la carga del archivo
         String filePath = storageService.store(file);
         motorcycle.setImage(filePath);
-
-        // Crear y guardar la motocicleta
         return motorcycleService.create(motorcycle);
     }
 
@@ -98,7 +94,6 @@ public class MotorcycleController {
 
 
     private String buildImageUrl(String filename) {
-        // Ajusta esta URL base según sea necesario para que coincida con tu configuración
         return "http://localhost:8080/api/v1/motorcycle/image/" + filename;
     }
 }

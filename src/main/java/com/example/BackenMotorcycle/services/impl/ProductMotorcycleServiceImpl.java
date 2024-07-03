@@ -13,8 +13,6 @@ import java.util.List;
 public class ProductMotorcycleServiceImpl implements ProductMotorcycleService {
     @Autowired
     private ProductMotorcycleRepository productMotorcycleRepository;
-    @Autowired
-    private ProductMotorcycleService productMotorcycleService;
 
     @Override
     public List<ProductMotorcycle> findAll() {
