@@ -21,6 +21,8 @@ public class ProductMotorcycle {
 
     private int stock;
 
+    private String image;
+
     @ManyToOne
     @JoinColumn (name = "product_type_id")
     private ProductMotorcycleType productMotorcycleType;
