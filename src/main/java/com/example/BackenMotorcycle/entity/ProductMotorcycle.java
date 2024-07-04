@@ -19,6 +19,8 @@ public class ProductMotorcycle {
 
     private BigDecimal price;
 
+    private String image;
+
     private int stock;
 
     @ManyToOne

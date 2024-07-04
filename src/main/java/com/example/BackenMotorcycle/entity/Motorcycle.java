@@ -13,9 +13,13 @@ public class Motorcycle {
     private Long id;
 
     private String model;
+
     private int year;
+
     private String color;
+
     private String price;
+
     private String image;
 
     @ManyToOne

@@ -22,6 +22,7 @@ public class FileSystemStorageService implements StorageService {
     @Value("${media.location}")
     private String mediaLocation;
 
+
     private Path rootLocation;
 
     @Override
