@@ -1,6 +1,7 @@
 package com.example.BackenMotorcycle.services.impl;
 
 import com.example.BackenMotorcycle.services.ProductService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -22,6 +23,7 @@ public class FileSystemProductServiceImpl implements ProductService {
     private Path imagePath;
 
     @Override
+    @PostConstruct
     public void init() throws Exception {
         imagePath = Paths.get(imageLocation);
         Files.createDirectories(imagePath);

@@ -6,10 +6,14 @@ import com.example.BackenMotorcycle.services.ProductMotorcycleService;
 import com.example.BackenMotorcycle.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @RestController
@@ -42,5 +46,17 @@ public class ProductMotorcycleController {
     @PutMapping("update/{id}")
     public ProductMotorcycle update(@PathVariable Long id, @RequestBody ProductMotorcycle productMotorcycle) {
         return productMotorcycleService.edit(id, productMotorcycle);
+    }
+    @GetMapping("image/{filename:.+}")
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
+        if (filename == null || filename.isEmpty()) {
+            throw new RuntimeException("Filename is null");
+        }
+        Resource file = productService.loadAsResource(filename);
+        String contentType = Files.probeContentType(file.getFile().toPath());
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_TYPE, contentType)
+                .body(file);
     }
 }
