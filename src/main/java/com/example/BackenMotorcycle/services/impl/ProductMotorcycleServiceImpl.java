@@ -1,6 +1,7 @@
 package com.example.BackenMotorcycle.services.impl;
 
 import com.example.BackenMotorcycle.entity.ProductMotorcycle;
+import com.example.BackenMotorcycle.entity.ProductMotorcycleType;
 import com.example.BackenMotorcycle.repository.ProductMotorcycleRepository;
 import com.example.BackenMotorcycle.services.ProductMotorcycleService;
 import jakarta.transaction.Transactional;
@@ -42,6 +43,11 @@ public class ProductMotorcycleServiceImpl implements ProductMotorcycleService {
         auxProduct.setPrice(productMotorcycle.getPrice());
         auxProduct.setStock(productMotorcycle.getStock());
         return productMotorcycleRepository.save(productMotorcycle);
+    }
+
+    @Override
+    public List<ProductMotorcycle> findProductsByType(ProductMotorcycleType type) {
+        return productMotorcycleRepository.findByProductMotorcycleType(type);
     }
 
     @Override

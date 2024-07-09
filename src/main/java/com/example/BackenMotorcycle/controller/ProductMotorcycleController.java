@@ -34,6 +34,14 @@ public class ProductMotorcycleController {
         return productMotorcycleService.findById(id);
     }
 
+    @GetMapping("byType/{typeId}")
+    public List<ProductMotorcycle> getProductsByType(@PathVariable Long typeId) {
+        ProductMotorcycleType type = new ProductMotorcycleType();
+        type.setId(typeId);
+
+        return productMotorcycleService.findProductsByType(type);
+    }
+
     @PostMapping("create")
     public ProductMotorcycle createProductMotorcycle(@RequestPart("product") String productJson,
                                                      @RequestPart("file") MultipartFile file) throws IOException {
