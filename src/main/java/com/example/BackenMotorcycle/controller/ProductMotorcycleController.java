@@ -38,7 +38,6 @@ public class ProductMotorcycleController {
     public List<ProductMotorcycle> getProductsByType(@PathVariable Long typeId) {
         ProductMotorcycleType type = new ProductMotorcycleType();
         type.setId(typeId);
-
         return productMotorcycleService.findProductsByType(type);
     }
 
