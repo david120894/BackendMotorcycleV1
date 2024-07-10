@@ -2,6 +2,8 @@ package com.example.BackenMotorcycle.services.impl;
 
 import java.util.List;
 
+import com.example.BackenMotorcycle.entity.Brandcycle;
+import com.example.BackenMotorcycle.services.BrandcycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     private MotorcycleRepository motorcycleRepository;
     @Autowired
     private MotorcycleTypeService motorcycleTypeService;
+    @Autowired
+    private BrandcycleService brandcycleService;
 
     @Override
     public List<Motorcycle> findAll() {
@@ -30,6 +34,11 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     public List<Motorcycle> findAllByMotorcycle(Long id) {
         MotorcycleType aux = motorcycleTypeService.findById(id);
         return motorcycleRepository.findAllByMotorcycleType(aux);
+    }
+    @Override
+    public List<Motorcycle> findAllByBrand(Long id) {
+        Brandcycle aux = brandcycleService.findById(id);
+        return motorcycleRepository.findAllByBrandcycle(aux);
     }
 
     @Override

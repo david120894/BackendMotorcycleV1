@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping(path = "api/v1/motorcycle")
 public class MotorcycleController {
-    private static final Logger log = LoggerFactory.getLogger(MotorcycleController.class);
     @Autowired
     private MotorcycleService motorcycleService;
 
@@ -55,7 +54,10 @@ public class MotorcycleController {
     public List<Motorcycle> getMotorcycleType(@PathVariable Long id) {
         return motorcycleService.findAllByMotorcycle(id);
     }
-
+    @GetMapping("motorcycleBrand/{id}")
+    public List<Motorcycle> getMotorcycleBrand(@PathVariable Long id) {
+        return motorcycleService.findAllByBrand(id);
+    }
     @PostMapping("create")
     public Motorcycle createMotorcycle(
             @RequestPart("motorcycle") String motorcycleJson,

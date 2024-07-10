@@ -14,6 +14,8 @@ public interface MotorcycleService {
 
     List<Motorcycle> findAllByMotorcycle(Long id);
 
+    List<Motorcycle> findAllByBrand(Long id);
+
     Motorcycle create(Motorcycle motorcycle) throws IOException;
 
     Motorcycle edit(Long id, Motorcycle motorcycle);
